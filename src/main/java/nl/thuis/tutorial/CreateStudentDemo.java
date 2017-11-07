@@ -21,12 +21,15 @@ public class CreateStudentDemo {
 		try {		
 			// Create Database Object
 			Student student = new Student("Henk", "De Groot", "Test@Test.nl");
-			
+			Student studentTwo = new Student("Pieter", "De Klein", "Testing@Test.nl");
+
+
 			// Begin Transaction
 			session.beginTransaction();
 			
 			// Save Database Object
 			session.save(student);
+			session.save(studentTwo);
 			
 			// Commit transaction
 			session.getTransaction().commit();
