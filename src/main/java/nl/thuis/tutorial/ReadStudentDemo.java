@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 import nl.thuis.tutorial.entity.Student;
 
-public class CreateStudentDemo {
+public class ReadStudentDemo {
 
 	public static void main(String[] args) {
 		// Creating sessionfactory
@@ -32,6 +32,19 @@ public class CreateStudentDemo {
 			
 			// Commit transaction
 			session.getTransaction().commit();
+			
+			session.close();
+			
+			// Get new Session
+			session = sessionFactory.getCurrentSession();
+			
+			session.beginTransaction();
+			
+			// read from database
+			Student tempStudent = session.get(Student.class, studentTwo.getId());
+			System.out.println(tempStudent);
+			
+			session.getTransaction().commit();			
 			
 		} catch(Exception e) {
 			e.printStackTrace();
