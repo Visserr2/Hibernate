@@ -24,7 +24,13 @@ public class Instructor {
 	private String email;
 	
 	// create relationship with InstructorDetail
-	// Updating all operations on object and all associated objects (cascade all)
+	// CascadeType.PERSIST : means that save() or persist() operations cascade to related entities.
+    // CascadeType.MERGE : means that related entities are merged when the owning entity is merged.
+    // CascadeType.REFRESH : does the same thing for the refresh() operation.
+    // CascadeType.REMOVE : removes all related entities association with this setting when the owning entity is deleted.
+    // CascadeType.DETACH : detaches all related entities if a “manual detach” occurs.
+    // CascadeType.ALL : is shorthand for all of the above cascade operations.
+	// Use multiple types: cascade= {CascadeType.PERSIST, CascadeType.MERGE, etc}
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="instructor_detail_id") // refer to foreign key
 	private InstructorDetail instructorDetail;

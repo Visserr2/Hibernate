@@ -54,7 +54,7 @@ public class QueryStudentDemo {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			// close session and session factory
+			// close session and session factory. Prevent memory leaks
 			session.close();
 			sessionFactory.close();
 		}

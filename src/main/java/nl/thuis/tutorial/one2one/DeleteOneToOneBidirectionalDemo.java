@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 import nl.thuis.tutorial.one2one.entity.Instructor;
 import nl.thuis.tutorial.one2one.entity.InstructorDetail;
 
-public class CreateOneToOneDemo {
+public class DeleteOneToOneBidirectionalDemo {
 
 	public static void main(String[] args) {
 		// Creating sessionfactory
@@ -20,18 +20,22 @@ public class CreateOneToOneDemo {
 				// get session
 				Session session = sessionFactory.getCurrentSession();
 				
-				try {
-					// Creating objects
-					Instructor instructor = new Instructor("Ronald", "Visser", "Ronald.Visser@hotmail.nl");
-					InstructorDetail instructorDetail = new InstructorDetail("https://youtube.com", "Youtube");
-					// Associating objects
-					instructor.setInstructorDetail(instructorDetail);
-					
+				try {					
 					// Begin Transaction
 					session.beginTransaction();
 					
-					// Save instructor - this also saves InstructorDetail because of cascade all
-					session.save(instructor);					
+					// get instructor - null if object cannot be found
+					int id = 2;
+					InstructorDetail instructorDetail = session.get(InstructorDetail.class, id);
+					
+					if(instructorDetail != null) {
+						System.out.println(instructorDetail);
+						System.out.println(instructorDetail.getInstructor());
+						// If cascade delete is turned off and instructordetail must be deleted then 
+						// the bidirectional relationship should be removed first as below
+						// instructorDetail.getInstructor(null);
+						session.delete(instructorDetail);
+					}
 					
 					// Commit transaction
 					session.getTransaction().commit();
@@ -41,7 +45,7 @@ public class CreateOneToOneDemo {
 				} finally {
 					// close session and session factory. Prevent memory leaks
 					session.close();
-					sessionFactory.close();
-				}
+			sessionFactory.close();
+		}
 	}
 }

@@ -29,7 +29,9 @@ public class DeleteOneToOneDemo {
 					Instructor instructor = session.get(Instructor.class, id);
 					
 					// Delete instructor and instructordetail because of cascade all
-					session.delete(instructor);
+					if(instructor != null) {
+						session.delete(instructor);
+					}
 					
 					// Commit transaction
 					session.getTransaction().commit();
@@ -37,7 +39,7 @@ public class DeleteOneToOneDemo {
 				} catch(Exception e) {
 					e.printStackTrace();
 				} finally {
-					// close session and session factory
+					// close session and session factory. Prevent memory leaks
 					session.close();
 					sessionFactory.close();
 				}

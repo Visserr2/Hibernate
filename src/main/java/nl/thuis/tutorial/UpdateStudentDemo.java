@@ -29,11 +29,15 @@ public class UpdateStudentDemo {
 			System.out.println("Fetched student: " + tempStudent);
 			
 			// Update name
-			System.out.println("Updating Student");
-			tempStudent.setFirstName("Scooby");
+			if(tempStudent != null) {
+				System.out.println("Updating Student");
+				tempStudent.setFirstName("Scooby");
+			}
 			
+			// Write update to database
 			session.getTransaction().commit();
 			
+			// Prevent memory leaks
 			session.close();
 			
 			// Get new session
@@ -50,7 +54,7 @@ public class UpdateStudentDemo {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			// close session and session factory
+			// close session and session factory. Prevent memory leaks
 			session.close();
 			sessionFactory.close();
 		}

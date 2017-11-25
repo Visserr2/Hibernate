@@ -33,6 +33,7 @@ public class ReadStudentDemo {
 			// Commit transaction
 			session.getTransaction().commit();
 			
+			// Prevent memory leaks
 			session.close();
 			
 			// Get new Session
@@ -49,7 +50,7 @@ public class ReadStudentDemo {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			// close session and session factory
+			// close session and session factory. Prevent memory leaks
 			session.close();
 			sessionFactory.close();
 		}

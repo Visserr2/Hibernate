@@ -30,10 +30,13 @@ public class DeleteStudentDemo {
 			
 			// Delete one record
 			System.out.println("Delete Student");
-			session.delete(tempStudent);
+			if(tempStudent != null) {
+				session.delete(tempStudent);
+			}
 			
 			session.getTransaction().commit();
 			
+			// Prevent memory leaks
 			session.close();
 			
 			// Get new session
@@ -50,7 +53,7 @@ public class DeleteStudentDemo {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			// close session and session factory
+			// close session and session factory. Prevent memory leaks
 			session.close();
 			sessionFactory.close();
 		}
