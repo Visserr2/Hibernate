@@ -77,7 +77,7 @@ public class Student {
 	}
 	
 	// Convenience method to add course
-	public void addStudent(Course course) {
+	public void addCourse(Course course) {
 		if(courses == null) {
 			courses = new ArrayList<>();
 		}

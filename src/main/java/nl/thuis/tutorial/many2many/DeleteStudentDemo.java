@@ -10,7 +10,7 @@ import nl.thuis.tutorial.many2many.entity.InstructorDetail;
 import nl.thuis.tutorial.many2many.entity.Review;
 import nl.thuis.tutorial.many2many.entity.Student;
 
-public class CreateCourseAndStudensDemo {
+public class DeleteStudentDemo {
 
 	public static void main(String[] args) {
 		// Creating sessionfactory
@@ -31,32 +31,20 @@ public class CreateCourseAndStudensDemo {
 					// Begin Transaction
 					session.beginTransaction();
 					
-					// Create new Course
-					System.out.println("Create Course");
-					Course course = new Course("This is a new course with reviews");
+					// Get Student
+					System.out.println("Get student");
+					int id = 2;
+					Student student = session.get(Student.class, id);
 					
-					// Save course.
-					System.out.println("Save course");
-					session.save(course);
+					// Viewing student and courses
+					System.out.println(student);
+					System.out.println(student.getCourses());
 					
-					// Create students
-					System.out.println("Create students");
-					Student student1 = new Student("Ronald", "Visser", "Ronald.visser@hotmail.nl");
-					Student student2 = new Student("Dennis", "Kamstra", "Dennis.Kamstra@hotmail.nl");
+					// Deleting student, does not delete course because of the Cascading type
+					System.out.println("Delete the student");
+					session.delete(student);
 					
-					// Add students to course
-					System.out.println("Add students to course");
-					course.addStudent(student1);
-					course.addStudent(student2);
-					
-					// Save students
-					System.out.println("Save students");
-					session.save(student1);
-					session.save(student2);				
-					System.out.println("Saved students in Course " + course.getStudents());
-					
-					// Now both students and courses are saved in database. 
-					// Also are the ids of the connected students and courses saved in the join table after the commit
+					// This also delete all the entries in jointable
 					
 					// Commit transaction
 					session.getTransaction().commit();
