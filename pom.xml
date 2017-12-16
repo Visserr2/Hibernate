@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<build>
-		<finalName>SpringMvc</finalName>
+		<finalName>Hibernate</finalName>
 	</build>
 
 	<properties>
