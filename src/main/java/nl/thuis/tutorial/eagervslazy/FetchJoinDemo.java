@@ -3,13 +3,13 @@ package nl.thuis.tutorial.eagervslazy;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import nl.thuis.tutorial.eagervslazy.entity.Course;
 import nl.thuis.tutorial.eagervslazy.entity.Instructor;
 import nl.thuis.tutorial.eagervslazy.entity.InstructorDetail;
 
-
-public class EagerLazyDemo {
+public class FetchJoinDemo {
 
 	public static void main(String[] args) {
 		// Creating sessionfactory
@@ -25,20 +25,40 @@ public class EagerLazyDemo {
 				
 				try {
 					
-					// Begin Transaction
+					// start a transaction
 					session.beginTransaction();
 					
-					// Get instructor
-					int id = 1;
-					System.out.println("Getting data from database");
-					Instructor instructor = session.get(Instructor.class, id);
-					System.out.println("Fetched data from database");
+					// option 2: Hibernate query with HQL
 					
-					// Show courses. When fetch type is lazy this will also call database to retrieve courses
-					System.out.println(instructor.getCourseList());
+					// get the instructor from db
+					int theId = 1;
+
+					Query<Instructor> query = 
+							session.createQuery("select i from Instructor i "
+											+ "JOIN FETCH i.courseList "
+											+ "where i.id=:theInstructorId", 
+									Instructor.class);
+
+					// set parameter on query
+					query.setParameter("theInstructorId", theId);
 					
-					// Commit transaction
+					// execute query and get instructor
+					Instructor tempInstructor = query.getSingleResult();
+					
+					System.out.println(" Instructor: " + tempInstructor);	
+					
+					// commit transaction
 					session.getTransaction().commit();
+					
+					// close the session
+					session.close();
+					
+					System.out.println("\n The session is now closed!\n");
+					
+					// get courses for the instructor
+					System.out.println(" Courses: " + tempInstructor.getCourseList());
+					
+					System.out.println(" Done!");
 					
 					// If the courses get fetched after the session is closed then an exception will be thrown
 					// There are three ways for lazy fetching to retrieve all data
