@@ -1,4 +1,4 @@
-package nl.thuis.tutorial.one2many.entity;
+package nl.thuis.tutorial.one2many.uni.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

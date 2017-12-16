@@ -1,14 +1,14 @@
-package nl.thuis.tutorial.one2many;
+package nl.thuis.tutorial.one2many.bi;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import nl.thuis.tutorial.one2many.entity.Course;
-import nl.thuis.tutorial.one2many.entity.Instructor;
-import nl.thuis.tutorial.one2many.entity.InstructorDetail;
+import nl.thuis.tutorial.one2many.bi.entity.Course;
+import nl.thuis.tutorial.one2many.bi.entity.Instructor;
+import nl.thuis.tutorial.one2many.bi.entity.InstructorDetail;
 
-public class GetInstructorCoursesOneToManyDemo {
+public class CreateCoursesOneToManyDemo {
 
 	public static void main(String[] args) {
 		// Creating sessionfactory
@@ -30,8 +30,18 @@ public class GetInstructorCoursesOneToManyDemo {
 					// Get instructor
 					int id = 1;
 					Instructor instructor = session.get(Instructor.class, id);
-
-					System.out.println(instructor.getCourseList());
+					
+					// Create course
+					Course course1 = new Course("The first course of the app");
+					Course course2 = new Course("The second course of the app");
+					
+					// Adding course to instructor
+					instructor.addCourse(course1);
+					instructor.addCourse(course2);
+					
+					// Save courses to database
+					session.save(course1);
+					session.save(course2);
 					
 					// Commit transaction
 					session.getTransaction().commit();

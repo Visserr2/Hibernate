@@ -1,14 +1,14 @@
-package nl.thuis.tutorial.one2many;
+package nl.thuis.tutorial.one2many.bi;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import nl.thuis.tutorial.one2many.entity.Course;
-import nl.thuis.tutorial.one2many.entity.Instructor;
-import nl.thuis.tutorial.one2many.entity.InstructorDetail;
+import nl.thuis.tutorial.one2many.bi.entity.Course;
+import nl.thuis.tutorial.one2many.bi.entity.Instructor;
+import nl.thuis.tutorial.one2many.bi.entity.InstructorDetail;
 
-public class CreateInstructorOneToManyDemo {
+public class GetInstructorCoursesOneToManyDemo {
 
 	public static void main(String[] args) {
 		// Creating sessionfactory
@@ -23,17 +23,15 @@ public class CreateInstructorOneToManyDemo {
 				Session session = sessionFactory.getCurrentSession();
 				
 				try {
-					// Creating objects
-					Instructor instructor = new Instructor("Ronald", "Visser", "Ronald.Visser@hotmail.nl");
-					InstructorDetail instructorDetail = new InstructorDetail("https://youtube.com", "Youtube");
-					// Associating objects
-					instructor.setInstructorDetail(instructorDetail);
 					
 					// Begin Transaction
 					session.beginTransaction();
 					
-					// Save instructor - this also saves InstructorDetail because of cascade all
-					session.save(instructor);					
+					// Get instructor
+					int id = 1;
+					Instructor instructor = session.get(Instructor.class, id);
+
+					System.out.println(instructor.getCourseList());
 					
 					// Commit transaction
 					session.getTransaction().commit();

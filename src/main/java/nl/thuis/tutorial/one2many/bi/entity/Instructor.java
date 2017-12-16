@@ -1,4 +1,4 @@
-package nl.thuis.tutorial.one2many.entity;
+package nl.thuis.tutorial.one2many.bi.entity;
 
 import java.util.ArrayList;
 import java.util.List;
