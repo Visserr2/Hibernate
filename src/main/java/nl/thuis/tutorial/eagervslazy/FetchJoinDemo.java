@@ -32,7 +32,8 @@ public class FetchJoinDemo {
 					
 					// get the instructor from db
 					int theId = 1;
-
+					
+					// The "Fetch"-keyword ensures that also all courses are loaded
 					Query<Instructor> query = 
 							session.createQuery("select i from Instructor i "
 											+ "JOIN FETCH i.courseList "
@@ -66,6 +67,9 @@ public class FetchJoinDemo {
 					// # Option 2: Retrieve all the necessary data with HQL within the session (@See FetchJoin Demo)
 					// # Option 3: Retrieve necessary data in another session and standalone-query (get all courses from constructor x)
 					
+					
+					// All ToOne relationships are eager by default
+					// All ToMany relationships are lazy by default
 				} catch(Exception e) {
 					e.printStackTrace();
 				} finally {
